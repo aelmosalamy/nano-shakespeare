@@ -77,9 +77,9 @@ What you will be spent.
 
 The code is a close replica of Karpathy's tutorial. I wrote it alongside the tutorial and tried to add annotations based
 on what I understood as well as important bits Karpathy called out. Eitherway, even with 0 knowlege about ML (never used
-`pytorch` for example), this exercise helped me form an understanding of the reasoning, engineering and decision-making
-process that goes into building this model. This project helped me build an intuition of what words like parameter count
-and context length means.
+`pytorch` for example), this project helped me form an understanding of the reasoning, engineering and decision-making
+process that goes into building language models. Overall, this project helped me build an intuition of what words like 
+parameter count and context length.
 
 The project also showed me the role of research and how an entire paper could introduce optimization techniques or
 showcase new architectural decisions or parameter choices; and how these many little improvements accumulate and
