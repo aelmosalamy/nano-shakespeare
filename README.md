@@ -81,7 +81,9 @@ on what I understood as well as important bits Karpathy called out. Eitherway, e
 process that goes into building this model. This project helped me build an intuition of what words like parameter count
 and context length means.
 
-The project also
+The project also showed me the role of research and how an entire paper could introduce optimization techniques or
+showcase new architectural decisions or parameter choices; and how these many little improvements accumulate and
+manifest as implementation decisions we follow in our code. Fascinating!
 
 ## How does this differ from a megacorp model like ChatGPT?
 
