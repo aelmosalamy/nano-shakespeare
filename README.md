@@ -1,6 +1,6 @@
 # nano-shakespeare
 
-`nano-shakespeare` is built based on Andrej Karpathy's ![Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY).
+`nano-shakespeare` is built based on Andrej Karpathy's [Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY).
 
 It's a language model trained on `tinyshakespeare.txt` and is capable of producing Shakespeare-like prose.
 
