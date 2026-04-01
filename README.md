@@ -1,11 +1,89 @@
 # nano-shakespeare
 
-`nano-shakespeare` built based on Andrej Karpathy's ![Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY).
+`nano-shakespeare` is built based on Andrej Karpathy's ![Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY).
 
-I tried to add comments to most of the information he called out. Even with 0 knowlege about ML (never used `pytorch`
-before, this exercise helped me form an appreciation of the engineering that goes into it. I was also able to formulate
-an understanding of the kind of decisions and areas of knowledge that would help you build and design systems in this
-domain.
+It's a language model trained on `tinyshakespeare.txt` and is capable of producing Shakespeare-like prose.
+
+## Sample output
+
+10M model:
+
+```
+Ere horse; and, I am safted from Henry too.
+
+KING EDWARD IV:
+No, but the maidenher on a battle sTeen first.
+
+QUEEN MARGARET:
+'Tis to be a sisty first, a man;
+but thou shouldst have made the groan, with a banch,
+Mistaughter to to your honour.
+
+GLOUCESTER:
+So sweet claim to your honour noble lord;
+I will not, I wish, and I warrant you off,
+Your cannot blee too. lean,--
+
+YORK:
+If so, he do repart it,--
+O'er--Coneopinion! Well, we thou hast borne-banish'd
+Which prayer o'erward love, boursday
+```
+
+25M model:
+
+```
+Of her life, and England's kingdom with a gold.
+
+MISTRESS OVERDONE:
+Sir will I was ne'er with her.
+
+PRITMO:
+Peace it is a I hodement: an hereafter
+talk in a polit, and odd; I would should have full
+Till dig the tent: it is true a tongue.
+
+MISTRESS OVERDONE:
+Indeed by mind of the wind I know
+That, yet were't beckween to triumph.
+
+HERMIONE:
+To tell do need hear to her be order:
+The had torch'd the world: the norbinage must
+Is fear'd morn Cry yarence, 'Desperved moon
+Doth unto sometit the the Tewks
+```
+
+25M with overfitting:
+
+```
+CAMILLO:
+I call it for you. Well, my lord.
+
+LUCIO:
+Be it keep you, perdicing, or else your part,
+Hold, gentle look, take to it. Nor you cannot
+To speak for the plainer. Wife, I am court
+That I do absent my son thunder flat life
+Betwixt my censures 'gainst the private through with
+A lion as this action made, which else
+As I remem'd warraked. Not to fight on direction
+To speak in compassion: ready your youth, ,
+Prodicide utter report yourself
+What you will be spent.
+```
+
+## Code & Learning Outcomes
+
+The code is a close replica of Karpathy's tutorial. I wrote it alongside the tutorial and tried to add annotations based
+on what I understood as well as important bits Karpathy called out. Eitherway, even with 0 knowlege about ML (never used
+`pytorch` for example), this exercise helped me form an understanding of the reasoning, engineering and decision-making
+process that goes into building this model. This project helped me build an intuition of what words like parameter count
+and context length means.
+
+The project also
+
+## How does this differ from a megacorp model like ChatGPT?
 
 Now, how does this thing differ from ChatGPT?
 
@@ -40,6 +118,8 @@ learning steps that happen later.
 
 The data used for finetuning is proprietary to OpenAI and overall the finetuning steps are much harder to replicate than
 the initial pretraining steps.
+
+# Hyperparameters
 
 Trained 10.8m parameter model on RTX 3050 with:
 

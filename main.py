@@ -1,16 +1,19 @@
 import os
+import sys
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+TRAIN = False
 
-torch.manual_seed(1337)
+if TRAIN:
+    torch.manual_seed(1337)
 
 # hyperparameters
 batch_size = 64  # how many independent sequences will be process in parallel
 block_size = 256  # the maximum context length for predictions
-max_iters = 5000
+max_iters = 5000 if TRAIN else 0
 eval_interval = 500
 # very low learning_rate because self-attention cant tolerate high learning rates, we compensate for that by increasing
 # the number of iterations
@@ -27,13 +30,6 @@ if device == "cuda":
     print(f"[+] gpu detected: {torch.cuda.get_device_name(0)}!")
 else:
     print("[-] falling back to cpu.")
-
-MODEL_VARIATION = "10m"
-assert MODEL_VARIATION in ["10m", "25m"], (
-    "You must choose between the `10m` and `25m` parameter models"
-)
-
-CHECKPOINT_PATH = f"checkpoints/checkpoint_{MODEL_VARIATION}.pth"
 
 DATASET_PATH = "dataset/tinyshakespeare.txt"
 
@@ -310,10 +306,27 @@ def generate_text(prompt, max_new_tokens=200):
 
 
 if __name__ == "__main__":
-    import sys
+    MODEL_VARIATION = "10m"
 
     if len(sys.argv) == 2:
-        prompt = sys.argv[1]
+        MODEL_VARIATION = sys.argv[1]
+    assert MODEL_VARIATION in ["10m", "25m", "25m_overfit"], (
+        "You must choose between the `10m` and `25m` parameter models"
+    )
+
+    if MODEL_VARIATION.startswith("25m"):
+        batch_size = 128
+        block_size = 512
+        max_iters = 5000
+        eval_interval = 500
+        learning_rate = 3e-4
+        eval_iters = 200
+        n_embed = 512
+        n_head = 8
+        n_layer = 8
+        dropout = 0.2
+
+    CHECKPOINT_PATH = f"checkpoints/checkpoint_{MODEL_VARIATION}.pth"
 
     model = BigramLanguageModel()
     model.to(device)
@@ -347,7 +360,12 @@ if __name__ == "__main__":
     print(
         f"[+] model has {sum(p.numel() for p in model.parameters()) / 1e6:.03f}m parameters"
     )
+    loss = None
     for itr in range(start_iter, max_iters + 1):
+        if not TRAIN:
+            print("[!] skipping training")
+            break
+
         # every once in a while evaluate the loss on train and val sets
         if itr % eval_interval == 0:
             losses = estimate_loss()
@@ -382,7 +400,8 @@ if __name__ == "__main__":
         loss.backward()
         optimizer.step()
 
-    print(f"[-] loss after optimization: {loss.item():.4f}")
-    print("[*] sample generation after %i rounds of optimization:" % max_iters)
+    if loss:
+        print(f"[-] loss after optimization: {loss.item():.4f}")
+    print("[*] sample generation:")
     context = torch.zeros((1, 1), dtype=torch.long, device=device)
     print(decode(model.generate(context, max_new_tokens=500)[0].tolist()))
